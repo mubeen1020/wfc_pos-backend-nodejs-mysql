@@ -2,7 +2,7 @@ const connection = require('../db');
 
 class FishCut {
   constructor(fishCut) {
-    this.fish_cut = fishCut.fish_cut || 'steaks'; // Default value is 'steaks'
+    this.fish_cut = fishCut.fish_cut || 'steaks'; 
   }
 
   static create(newFishCut, result) {

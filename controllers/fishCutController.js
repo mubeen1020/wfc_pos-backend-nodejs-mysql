@@ -1,13 +1,10 @@
 const FishCut = require('../models/fishCutModel');
 
 exports.createFishCut = (req, res) => {
-  const { fish_cut } = req.body;
+  const  fish_cut  = req.body;
 
-  const newFishCut = new FishCut({
-    fish_cut,
-  });
 
-  FishCut.create(newFishCut, (error, fishCut) => {
+  FishCut.create(fish_cut, (error, fishCut) => {
     if (error) {
       return res.status(500).json({
         message: 'An error occurred while creating a new Fish Cut.',

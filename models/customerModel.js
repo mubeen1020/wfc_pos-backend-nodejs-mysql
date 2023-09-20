@@ -81,6 +81,24 @@ class Customer {
       result(null, { id });
     });
   }
+
+  static search(query, result) {
+    const searchTerm = `%${query}%`;
+    const sql = `
+    SELECT * FROM customer
+    WHERE name LIKE ? OR username LIKE ?
+  `;
+  
+    connection.query(sql, [searchTerm, searchTerm], (error, res) => {
+      if (error) {
+        console.error('Error searching for customers:', error);
+        result(error, null);
+        return;
+      }
+      console.log('Searched customers:', res);
+      result(null, res);
+    });
+  }
 }
 
 module.exports = Customer;

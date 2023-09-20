@@ -3,24 +3,29 @@ const connection = require('../db');
 class FishPack {
   constructor(fishPack) {
     this.packing_date = fishPack.packing_date;
-    this.fish_id = fishPack.fish_id;
+    this.fish_ref = fishPack.fish_ref;
     this.whole_fish_payment = fishPack.whole_fish_payment;
-    this.whole_fish_weight = fishPack.whole_fish_weight;
-    this.whole_fish_packs = fishPack.whole_fish_packs;
-    this.whole_fish_pack_weight = fishPack.whole_fish_weight / fishPack.whole_fish_packs;
-    this.whole_fish_rate = fishPack.whole_fish_payment / fishPack.whole_fish_weight;
-    this.net_meat_weight = fishPack.net_meat_weight || 0;
-    this.net_meat_rate = fishPack.net_meat_weight === 0 ? 0 : fishPack.whole_fish_payment / fishPack.net_meat_weight;
-    this.bone_weight = fishPack.bone_weight || 0;
-    this.bone_packs = fishPack.bone_packs || 0;
-    this.bone_rate = fishPack.bone_packs === 0 ? 0 : fishPack.bone_weight / fishPack.bone_packs;
-    this.fish_cut = fishPack.fish_cut || 'Steaks';
-    this.average_fish_piece_size = fishPack.average_fish_piece_size || null;
-    this.head_removed = fishPack.head_removed || false;
-    this.skin_removed = fishPack.skin_removed || false;
-    this.kante = fishPack.kante || 'None';
-    this.available_packs = fishPack.whole_fish_packs;
+    this.whole_fish_total_weight = fishPack.whole_fish_total_weight;
+    this.fish_packs = fishPack.fish_packs;
+    this.net_meat_total_weight = fishPack.net_meat_total_weight;
+    this.bones_total_weight = fishPack.bones_total_weight;
+    this.bones_packs = fishPack.bones_packs;
+    this.whole_fish_pack_weight = fishPack.whole_fish_pack_weight;
+    this.whole_fish_purchase_rate = fishPack.whole_fish_purchase_rate;
+    this.whole_fish_sale_rate = fishPack.whole_fish_sale_rate;
+    this.net_meat_pack_weight = fishPack.net_meat_pack_weight;
+    this.net_meat_weight_per_kg = fishPack.net_meat_weight_per_kg;
+    this.net_meat_sale_rate = fishPack.net_meat_sale_rate;
+    this.bones_pack_weight = fishPack.bones_pack_weight;
+    this.bones_pack_rate = fishPack.bones_pack_rate;
+    this.fish_cut = fishPack.fish_cut;
+    this.average_fish_piece_size = fishPack.average_fish_piece_size;
+    this.head_removed = fishPack.head_removed;
+    this.skin_removed = fishPack.skin_removed;
+    this.kante = fishPack.kante;
+    this.available_packs = fishPack.available_packs;
   }
+
 
   static create(newFishPack, result) {
     connection.query('INSERT INTO fish_pack SET ?', newFishPack, (error, res) => {

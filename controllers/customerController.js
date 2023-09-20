@@ -1,6 +1,5 @@
 const Customer = require('../models/customerModel');
 
-// Create a new customer
 exports.createCustomer = (req, res) => {
   const newCustomerData = req.body;
 
@@ -18,7 +17,6 @@ exports.createCustomer = (req, res) => {
   });
 };
 
-// Get all customers
 exports.getAllCustomers = (req, res) => {
   Customer.getAll((error, customers) => {
     if (error) {
@@ -34,7 +32,6 @@ exports.getAllCustomers = (req, res) => {
   });
 };
 
-// Get a customer by ID
 exports.getCustomerById = (req, res) => {
   const { id } = req.params;
 
@@ -57,7 +54,6 @@ exports.getCustomerById = (req, res) => {
   });
 };
 
-// Update a customer by ID
 exports.updateCustomer = (req, res) => {
   const { id } = req.params;
   const updatedCustomerData = req.body;
@@ -76,7 +72,7 @@ exports.updateCustomer = (req, res) => {
   });
 };
 
-// Delete a customer by ID
+
 exports.deleteCustomer = (req, res) => {
   const { id } = req.params;
 
@@ -93,3 +89,18 @@ exports.deleteCustomer = (req, res) => {
     });
   });
 };
+
+exports.searchCustomers = (req, res) => {
+    const query = req.query.query;
+    Customer.search(query, (error, customers) => {
+      if (error) {
+        console.error('Error searching for customers:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+      if (customers.length === 0) {
+        return res.json({ message: 'Customer not found.' }).status(404);
+      }
+      return res.status(200).json(customers);
+    });
+  };
+  

@@ -15,6 +15,7 @@ const paymentRouter = require('./routes/paymentRoutes');
 const ratesrouter = require('./routes/rateListRoutes');
 const ratesstockrouter = require('./routes/rateListFishStockRoutes');
 const settingsrouter = require('./routes/settingsRoutes');
+const paymentmodeRouter = require('./routes/paymentmodeRoutes');
 const app = express();
 require('dotenv').config();
 
@@ -35,12 +36,14 @@ app.use('/api', orderStatusrouter);
 app.use('/api', paymentStatusrouter);
 app.use('/api', ordersrouter);
 app.use('/api', fishCutRouter);
-app.use('/api', orderItemRouter);
 app.use('/api', paymentMethodRouter);
+app.use('/api', orderItemRouter);
+app.use('/api', paymentmodeRouter);
 app.use('/api', paymentRouter);
 app.use('/api', ratesrouter);
 app.use('/api', ratesstockrouter);
 app.use('/api', settingsrouter);
+
 
 const port = process.env.PORT || 1800;
 
