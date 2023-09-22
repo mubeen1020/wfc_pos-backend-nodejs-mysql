@@ -8,9 +8,9 @@ class Fish {
         this.net_steaks = fish.net_steaks;
         this.net_boneless = fish.net_boneless;
         this.bones = fish.bones;
-        this.min_rate = fish.min_rate;
-        this.max_rate = fish.max_rate;
-        this.average_rate = fish.average_rate;
+        this.min_purchase_rate = fish.min_purchase_rate;
+        this.max_purchase_rate = fish.max_purchase_rate;
+        this.average_purchase_rate = fish.average_purchase_rate;
         this.overall_purchase_quantity = fish.overall_purchase_quantity;
     }
 

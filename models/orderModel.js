@@ -75,6 +75,26 @@ class Order {
       result(null, { id });
     });
   }
+
+  static searchByCustomerName(customerName, result) {
+    const query = `
+      SELECT o.*
+      FROM orders o
+      JOIN customers c ON o.customer = c.id
+      WHERE c.full_name LIKE ?
+    `;
+    const searchTerm = `%${customerName}%`; 
+
+    connection.query(query, [searchTerm], (error, res) => {
+      if (error) {
+        console.error('Error searching orders by customer name:', error);
+        result(error, null);
+        return;
+      }
+      console.log(`Searched orders by customer name '${customerName}':`, res);
+      result(null, res);
+    });
+  }
 }
 
 module.exports = Order;

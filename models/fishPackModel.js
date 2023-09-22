@@ -11,13 +11,17 @@ class FishPack {
     this.bones_total_weight = fishPack.bones_total_weight;
     this.bones_packs = fishPack.bones_packs;
     this.whole_fish_pack_weight = fishPack.whole_fish_pack_weight;
+    this.whole_fish_pack_price = fishPack.whole_fish_pack_price;
     this.whole_fish_purchase_rate = fishPack.whole_fish_purchase_rate;
     this.whole_fish_sale_rate = fishPack.whole_fish_sale_rate;
     this.net_meat_pack_weight = fishPack.net_meat_pack_weight;
     this.net_meat_weight_per_kg = fishPack.net_meat_weight_per_kg;
     this.net_meat_sale_rate = fishPack.net_meat_sale_rate;
     this.bones_pack_weight = fishPack.bones_pack_weight;
+    this.bones_pack_price = fishPack.bones_pack_price;
     this.bones_pack_rate = fishPack.bones_pack_rate;
+    this.available_meat_packs = fishPack.available_meat_packs,
+    this.available_bones_packs = fishPack.available_bones_packs,
     this.fish_cut = fishPack.fish_cut;
     this.average_fish_piece_size = fishPack.average_fish_piece_size;
     this.head_removed = fishPack.head_removed;
@@ -90,6 +94,25 @@ class FishPack {
       result(null, { id });
     });
   }
+
+  static searchByPackingDateAndFishRef(packingDate, fishRef, result) {
+    const query = `
+    SELECT * FROM fish_pack 
+    WHERE packing_date = ? 
+    OR (fish_ref IN (SELECT id FROM fish WHERE local_name = ?))
+`;
+console.log('Constructed SQL Query:', query);
+    connection.query(query, [packingDate, fishRef], (error, res) => {
+      if (error) {
+        console.error('Error searching fish packs:', error);
+        result(error, null);
+        return;
+      }
+      console.log('Searched fish packs:', res);
+      result(null, res);
+    });
+  }
+  
 }
 
 module.exports = FishPack;

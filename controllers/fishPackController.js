@@ -88,3 +88,15 @@ exports.getFishPackById = (req, res) => {
       });
     });
   };
+
+  exports.searchFishPacks = (req, res) => {
+    const { packingDate, fishRef } = req.query;
+   
+    FishPack.searchByPackingDateAndFishRef(packingDate, fishRef, (error, fishPacks) => {
+      if (error) {
+        return res.status(500).json({ error: 'Error searching fish packs' });
+      }
+      
+      res.status(200).json({ fishPacks });
+    });
+  };

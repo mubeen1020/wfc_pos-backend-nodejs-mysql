@@ -1,15 +1,10 @@
-const OrderItem = require('../models/orderItemModel');
+const OrderstockItem = require('../models/orderstockItemModel');
 
 exports.createOrderItem = (req, res) => {
   const {
     order_id,
-    fish_id,
-    fish_cut,
-    total_packs_order,
-    pack_ref,
-    total_packs_available,
-    packing_date,
-    average_fish_size,
+    fish_pack_ref,
+    total_packs_ordered,
     fish_weight,
     meat_weight,
     fish_rate,
@@ -21,15 +16,10 @@ exports.createOrderItem = (req, res) => {
     item_discount_percent,
   } = req.body;
 
-  const newOrderItem = new OrderItem({
+const newOrderItem = new OrderstockItem({
     order_id,
-    fish_id,
-    fish_cut,
-    total_packs_order,
-    pack_ref,
-    total_packs_available,
-    packing_date,
-    average_fish_size,
+    fish_pack_ref,
+    total_packs_ordered,
     fish_weight,
     meat_weight,
     fish_rate,
@@ -39,9 +29,9 @@ exports.createOrderItem = (req, res) => {
     pack_price,
     item_discount_absolute,
     item_discount_percent,
-  });
+});
 
-  OrderItem.create(newOrderItem, (error, orderItem) => {
+OrderstockItem.create(newOrderItem, (error, orderItem) => {
     if (error) {
       return res.status(500).json({
         message: 'An error occurred while creating a new Order Item.',
@@ -58,7 +48,7 @@ exports.createOrderItem = (req, res) => {
 exports.getOrderItemById = (req, res) => {
   const { id } = req.params;
 
-  OrderItem.getById(id, (error, orderItem) => {
+  OrderstockItem.getById(id, (error, orderItem) => {
     if (error) {
       return res.status(500).json({
         message: 'An error occurred while retrieving Order Item by ID.',
@@ -78,7 +68,7 @@ exports.getOrderItemById = (req, res) => {
 };
 
 exports.getAllOrderItems = (req, res) => {
-  OrderItem.getAll((error, orderItems) => {
+  OrderstockItem.getAll((error, orderItems) => {
     if (error) {
       return res.status(500).json({
         message: 'An error occurred while retrieving Order Items.',
@@ -96,7 +86,7 @@ exports.updateOrderItem = (req, res) => {
   const { id } = req.params;
   const updatedOrderItem = req.body;
 
-  OrderItem.updateById(id, updatedOrderItem, (error, orderItem) => {
+  OrderstockItem.updateById(id, updatedOrderItem, (error, orderItem) => {
     if (error) {
       return res.status(500).json({
         message: 'An error occurred while updating Order Item.',
@@ -113,7 +103,7 @@ exports.updateOrderItem = (req, res) => {
 exports.deleteOrderItem = (req, res) => {
   const { id } = req.params;
 
-  OrderItem.deleteById(id, (error, result) => {
+  OrderstockItem.deleteById(id, (error, result) => {
     if (error) {
       return res.status(500).json({
         message: 'An error occurred while deleting Order Item.',

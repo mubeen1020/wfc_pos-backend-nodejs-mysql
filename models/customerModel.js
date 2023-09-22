@@ -5,7 +5,7 @@ class Customer {
     this.id = customer.id; 
     this.username = customer.username; 
     this.password = customer.username; 
-    this.name = customer.name;
+    this.full_name = customer.full_name;
     this.care_of_ref = customer.care_of_ref;
     this.care_of_name = customer.care_of_name;
     this.phone_1 = customer.phone_1;
@@ -19,7 +19,7 @@ class Customer {
   }
 
   static create(newCustomer, result) {
-    connection.query('INSERT INTO customer SET ?', newCustomer, (error, res) => {
+    connection.query('INSERT INTO customers SET ?', newCustomer, (error, res) => {
       if (error) {
         console.error('Error creating a new customer:', error);
         result(error, null);
@@ -31,7 +31,7 @@ class Customer {
   }
 
   static getAll(result) {
-    connection.query('SELECT * FROM customer', (error, res) => {
+    connection.query('SELECT * FROM customers', (error, res) => {
       if (error) {
         console.error('Error retrieving customers:', error);
         result(error, null);
@@ -43,7 +43,7 @@ class Customer {
   }
 
   static getById(id, result) {
-    connection.query('SELECT * FROM customer WHERE id = ?', id, (error, res) => {
+    connection.query('SELECT * FROM customers WHERE id = ?', id, (error, res) => {
       if (error) {
         console.error('Error retrieving customer by ID:', error);
         result(error, null);
@@ -59,7 +59,7 @@ class Customer {
   }
 
   static update(id, updatedCustomer, result) {
-    connection.query('UPDATE customer SET ? WHERE id = ?', [updatedCustomer, id], (error, res) => {
+    connection.query('UPDATE customers SET ? WHERE id = ?', [updatedCustomer, id], (error, res) => {
       if (error) {
         console.error('Error updating the customer:', error);
         result(error, null);
@@ -71,7 +71,7 @@ class Customer {
   }
 
   static delete(id, result) {
-    connection.query('DELETE FROM customer WHERE id = ?', id, (error, res) => {
+    connection.query('DELETE FROM customers WHERE id = ?', id, (error, res) => {
       if (error) {
         console.error('Error deleting the customer:', error);
         result(error, null);
@@ -85,8 +85,8 @@ class Customer {
   static search(query, result) {
     const searchTerm = `%${query}%`;
     const sql = `
-    SELECT * FROM customer
-    WHERE name LIKE ? OR username LIKE ?
+    SELECT * FROM customers
+    WHERE full_name LIKE ? OR username LIKE ?
   `;
   
     connection.query(sql, [searchTerm, searchTerm], (error, res) => {

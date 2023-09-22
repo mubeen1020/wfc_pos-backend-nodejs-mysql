@@ -88,3 +88,15 @@ exports.deleteOrder = (req, res) => {
     });
   });
 };
+
+exports.searchOrdersByCustomerName = (req, res) => {
+  const { customerName } = req.query; 
+
+  Order.searchByCustomerName(customerName, (error, orders) => {
+    if (error) {
+      return res.status(500).json({ error: 'Error searching orders by customer name' });
+    }
+
+    res.status(200).json({ orders });
+  });
+};

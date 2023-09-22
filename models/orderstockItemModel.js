@@ -1,15 +1,10 @@
 const connection = require('../db');
 
-class OrderItem {
+class OrderstockItem {
   constructor(orderItem) {
     this.order_id = orderItem.order_id;
-    this.fish_id = orderItem.fish_id;
-    this.fish_cut = orderItem.fish_cut || 'steaks'; 
-    this.total_packs_order = orderItem.total_packs_order;
-    this.pack_ref = orderItem.pack_ref;
-    this.total_packs_available = orderItem.total_packs_available;
-    this.packing_date = orderItem.packing_date;
-    this.average_fish_size = orderItem.average_fish_size;
+    this.fish_pack_ref = orderItem.fish_pack_ref;
+    this.total_packs_ordered = orderItem.total_packs_ordered;
     this.fish_weight = orderItem.fish_weight;
     this.meat_weight = orderItem.meat_weight;
     this.fish_rate = orderItem.fish_rate;
@@ -22,7 +17,7 @@ class OrderItem {
   }
 
   static create(newOrderItem, result) {
-    connection.query('INSERT INTO order_item SET ?', newOrderItem, (error, res) => {
+    connection.query('INSERT INTO orderstock_items SET ?', newOrderItem, (error, res) => {
       if (error) {
         console.error('Error creating a new Order Item:', error);
         result(error, null);
@@ -34,7 +29,7 @@ class OrderItem {
   }
 
   static getById(orderItemId, result) {
-    connection.query('SELECT * FROM order_item WHERE id = ?', orderItemId, (error, res) => {
+    connection.query('SELECT * FROM orderstock_items WHERE id = ?', orderItemId, (error, res) => {
       if (error) {
         console.error('Error retrieving Order Item:', error);
         result(error, null);
@@ -50,7 +45,7 @@ class OrderItem {
   }
 
   static getAll(result) {
-    connection.query('SELECT * FROM order_item', (error, res) => {
+    connection.query('SELECT * FROM orderstock_items', (error, res) => {
       if (error) {
         console.error('Error retrieving Order Items:', error);
         result(error, null);
@@ -62,7 +57,7 @@ class OrderItem {
   }
 
   static updateById(orderItemId, updatedOrderItem, result) {
-    connection.query('UPDATE order_item SET ? WHERE id = ?', [updatedOrderItem, orderItemId], (error, res) => {
+    connection.query('UPDATE orderstock_items SET ? WHERE id = ?', [updatedOrderItem, orderItemId], (error, res) => {
       if (error) {
         console.error('Error updating Order Item:', error);
         result(error, null);
@@ -74,7 +69,7 @@ class OrderItem {
   }
 
   static deleteById(orderItemId, result) {
-    connection.query('DELETE FROM order_item WHERE id = ?', orderItemId, (error, res) => {
+    connection.query('DELETE FROM orderstock_items WHERE id = ?', orderItemId, (error, res) => {
       if (error) {
         console.error('Error deleting Order Item:', error);
         result(error, null);
@@ -86,4 +81,4 @@ class OrderItem {
   }
 }
 
-module.exports = OrderItem;
+module.exports = OrderstockItem;

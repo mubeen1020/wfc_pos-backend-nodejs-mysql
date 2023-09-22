@@ -1,6 +1,6 @@
 const express = require('express');
 const orderItemRouter = express.Router();
-const orderItemController = require('../controllers/orderItemController');
+const orderItemController = require('../controllers/orderstockItemController');
 
 orderItemRouter.post('/order-items', orderItemController.createOrderItem);
 orderItemRouter.get('/order-items/:id', orderItemController.getOrderItemById);
