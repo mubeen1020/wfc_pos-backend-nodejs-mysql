@@ -57,4 +57,14 @@ module.exports = {
       }
     });
   },
+
+  getSameFishRefAndFishCut:function (req, res) {
+    OrderPurchaseItem.getSameFishRefAndFishCut((err, data) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.status(200).json(data);
+    });
+  }
 };

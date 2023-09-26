@@ -8,5 +8,6 @@ orderpurchaserouter.get('/order-purchase-item', orderPurchaseItemController.orde
 orderpurchaserouter.get('/order-purchase-item/:id', orderPurchaseItemController.orderPurchaseItemgetById);
 orderpurchaserouter.put('/order-purchase-item/:id', orderPurchaseItemController.orderPurchaseItemupdate);
 orderpurchaserouter.delete('/order-purchase-item/:id', orderPurchaseItemController.orderPurchaseItemdelete);
+orderpurchaserouter.get('/fishrefandfishcut', orderPurchaseItemController.getSameFishRefAndFishCut);
 
 module.exports = orderpurchaserouter;

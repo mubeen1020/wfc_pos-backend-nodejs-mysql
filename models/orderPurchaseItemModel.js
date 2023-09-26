@@ -74,6 +74,25 @@ class OrderPurchaseItem {
       result(null, { id });
     });
   }
+ 
+  static getSameFishRefAndFishCut(result){
+    const query = `
+    SELECT fish_ref, fish_cut, SUM(fish_weight) AS fish_weight, SUM(meat_weight) AS meat_weight
+    FROM order_purchase_item
+    GROUP BY fish_ref, fish_cut;
+    `;
+  
+    connection.query(query, (error, res) => {
+      if (error) {
+        console.error('Error retrieving rows with the same fish_ref and fish_cut:', error);
+        result(error, null);
+        return;
+      }
+      console.log('Retrieved rows with the same fish_ref and fish_cut:', res);
+      result(null, res);
+    });
+  };
+
 }
 
 module.exports = OrderPurchaseItem;
