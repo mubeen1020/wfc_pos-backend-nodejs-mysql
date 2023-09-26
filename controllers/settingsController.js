@@ -52,6 +52,28 @@ exports.deleteSettings = (req, res) => {
   });
 };
 
+exports.getSettingsById = (req, res) => {
+  const { id } = req.params;
+
+  Settings.getById(id, (error, settings) => {
+    if (error) {
+      return res.status(500).json({
+        message: 'An error occurred while retrieving the settings.',
+        error,
+      });
+    }
+    if (!settings) {
+      return res.status(404).json({
+        message: 'settings not found.',
+      });
+    }
+    res.json({
+      message: 'settings by ID!',
+      settings,
+    });
+  });
+};
+
 exports.getAllSettings = (req, res) => {
   Settings.getAll((err, data) => {
     if (err) {
