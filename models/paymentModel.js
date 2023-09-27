@@ -76,6 +76,28 @@ class Payment {
       result(null, { id: paymentId });
     });
   }
+
+  static searchByCustomerFullName(searchTerm, result) {
+    const query = `
+      SELECT payments.*, customers.*
+      FROM payments
+      JOIN customers ON customers.id = payments.customer
+      WHERE customers.full_name LIKE ?;
+    `;
+
+    const searchValue = `%${searchTerm}%`; 
+
+    connection.query(query, [searchValue], (error, res) => {
+      if (error) {
+        console.error('Error searching for payments by customer full name:', error);
+        result(error, null);
+        return;
+      }
+      console.log('Retrieved payments:', res);
+      result(null, res);
+    });
+  }
+
 }
 
 module.exports = Payment;

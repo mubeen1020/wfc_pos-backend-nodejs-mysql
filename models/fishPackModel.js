@@ -99,7 +99,7 @@ class FishPack {
     const query = `
     SELECT * FROM fish_pack 
     WHERE packing_date = ? 
-    OR (fish_ref IN (SELECT id FROM fish WHERE local_name = ?))
+    OR (fish_ref IN (SELECT id FROM fish WHERE local_name LIKE  ?))
 `;
 console.log('Constructed SQL Query:', query);
     connection.query(query, [packingDate, fishRef], (error, res) => {

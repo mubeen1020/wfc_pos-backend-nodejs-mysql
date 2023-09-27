@@ -93,6 +93,29 @@ class OrderPurchaseItem {
     });
   };
 
+static searchByFishLocalNameOrFishCut(searchTerm, result) {
+  const query = `
+    SELECT *
+    FROM order_purchase_item AS opi
+    JOIN fish ON fish.id = opi.fish_ref
+    WHERE fish.local_name LIKE ? 
+  `;
+
+  const searchValue = `%${searchTerm}%`; // Add '%' to the search term for partial matching
+
+  connection.query(query, [searchValue, searchValue], (error, res) => {
+    if (error) {
+      console.error('Error searching for order purchase items:', error);
+      result(error, null);
+      return;
+    }
+    console.log('Retrieved order purchase items:', res);
+    result(null, res);
+  });
+}
+
+
+
 }
 
 module.exports = OrderPurchaseItem;

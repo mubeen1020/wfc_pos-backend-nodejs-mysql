@@ -66,5 +66,28 @@ module.exports = {
       }
       res.status(200).json(data);
     });
+  },
+
+  searchByFishLocalNameOrFishCut: function (req, res){
+    const { searchTerm } = req.query;
+    console.log('Search Term:', searchTerm);
+    OrderPurchaseItem.searchByFishLocalNameOrFishCut(searchTerm, (err, data) => {
+      if (err) {
+        res.status(500).json({
+          message: 'Error searching for Order Purchase Items',
+          error: err,
+        });
+      } else {
+        const mergedData = data.map(item => ({
+          ...item,
+          'localname/fishcut': `${item['fish.local_name']}/${item['fish_cut.fish_cut']}`,
+        }));
+  
+        res.status(200).json(mergedData);
+      }
+    });
   }
-};
+
+}
+
+

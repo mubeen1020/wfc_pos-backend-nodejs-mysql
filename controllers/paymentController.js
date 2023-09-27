@@ -98,3 +98,18 @@ exports.deletePayment = (req, res) => {
     });
   });
 };
+
+exports.searchPaymentsByCustomerFullName = (req, res) => {
+  const { searchTerm } = req.query;
+  
+  Payment.searchByCustomerFullName(searchTerm, (err, data) => {
+    if (err) {
+      res.status(500).json({
+        message: 'Error searching for payments by customer full name',
+        error: err,
+      });
+    } else {
+      res.status(200).json(data);
+    }
+  });
+};

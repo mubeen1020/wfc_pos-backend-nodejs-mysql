@@ -79,6 +79,25 @@ class OrderstockItem {
       result(null, { message: 'Order Item deleted' });
     });
   }
+
+  static searchByCustomerFullName(customerFullName, result) {
+    const queryString = `
+      SELECT osi.*
+      FROM orderstock_items AS osi
+      JOIN orders AS o ON osi.order_id = o.id
+      JOIN customers AS c ON o.customer = c.id
+      WHERE c.full_name LIKE ?`;
+
+    connection.query(queryString, [`%${customerFullName}%`], (error, res) => {
+      if (error) {
+        console.error('Error searching for Order Items by customer full name:', error);
+        result(error, null);
+        return;
+      }
+      console.log('Retrieved Order Items by customer full name:', res);
+      result(null, res);
+    });
+  }
 }
 
 module.exports = OrderstockItem;

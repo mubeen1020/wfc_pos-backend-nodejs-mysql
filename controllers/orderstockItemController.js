@@ -114,3 +114,18 @@ exports.deleteOrderItem = (req, res) => {
     ({result,id});
   });
 };
+
+exports.searchByCustomerFullName = (req, res) => {
+  const { customerFullName } = req.query; 
+  
+  OrderstockItem.searchByCustomerFullName(customerFullName, (err, data) => {
+    if (err) {
+      res.status(500).json({
+        message: 'Error retrieving Order Items by customer full name',
+        error: err,
+      });
+    } else {
+      res.status(200).json(data);
+    }
+  });
+};
