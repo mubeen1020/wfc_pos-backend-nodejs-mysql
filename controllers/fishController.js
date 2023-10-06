@@ -32,6 +32,10 @@ exports.getAllFish = (req, res) => {
   });
 };
 
+
+
+
+
 exports.getFishById = (req, res) => {
     const { id } = req.params;
   
@@ -50,6 +54,21 @@ exports.getFishById = (req, res) => {
       res.json({
         message: 'Found fish by ID!',
         fish,
+      });
+    });
+  };
+
+  exports.getAllFishsettings = (req, res) => {
+    Fish.getFishWithSettings((error, list) => {
+      if (error) {
+        return res.status(500).json({
+          message: 'An error occurred while retrieving fish.',
+          error,
+        });
+      }
+      res.json({
+        message: 'Retrieved fish successfully!',
+        list,
       });
     });
   };

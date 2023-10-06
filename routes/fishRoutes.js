@@ -4,6 +4,7 @@ const fishController = require('../controllers/fishController');
 
 fishrouter.post('/fish', fishController.createFish);
 fishrouter.get('/fish', fishController.getAllFish);
+fishrouter.get('/fish/settings', fishController.getAllFishsettings);
 fishrouter.get('/fish/search', fishController.searchFish);
 fishrouter.get('/fish/:id', fishController.getFishById);
 fishrouter.put('/fish/:id', fishController.updateFish);

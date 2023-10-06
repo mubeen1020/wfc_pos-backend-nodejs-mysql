@@ -12,16 +12,6 @@ module.exports = {
     });
   },
 
-  orderPurchaseItemgetAll: function (req, res) {
-    OrderPurchaseItem.getAll((err, results) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
-        res.json(results);
-      }
-    });
-  },
-
   orderPurchaseItemgetById: function (req, res) {
     const id = req.params.id;
     OrderPurchaseItem.getById(id, (err, result) => {
@@ -34,6 +24,18 @@ module.exports = {
       }
     });
   },
+
+  orderPurchaseItemgetAll: function (req, res) {
+    OrderPurchaseItem.getAll((err, results) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        res.json(results);
+      }
+    });
+  },
+
+ 
 
   orderPurchaseItemupdate: function (req, res) {
     const id = req.params.id;

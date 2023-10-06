@@ -91,6 +91,28 @@ class Fish {
             result(null, res);
         });
     }
+
+    static getFishWithSettings(result) {
+        const sqlQuery = `
+        SELECT fish.*, settings.half_service_charges,settings.full_service_charges,settings.miniumum_order_weight FROM fish JOIN settings ON settings.id = fish.settings_id
+        `;
+      
+        connection.query(sqlQuery, (error, res) => {
+            if (error) {
+                console.error('Error retrieving fish:', error);
+                result(error, null);
+                return;
+            }
+            console.log('Retrieved fish:', res);
+            result(null, res);
+         ;
+        });
+      }
+      
+      
+
 }
+
+
 
 module.exports = Fish;
