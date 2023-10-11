@@ -101,7 +101,6 @@ class FishPack {
     WHERE packing_date = ? 
     OR (fish_ref IN (SELECT id FROM fish WHERE local_name LIKE  ?))
 `;
-console.log('Constructed SQL Query:', query);
     connection.query(query, [packingDate, fishRef], (error, res) => {
       if (error) {
         console.error('Error searching fish packs:', error);
@@ -112,6 +111,32 @@ console.log('Constructed SQL Query:', query);
       result(null, res);
     });
   }
+
+  static getmin_max_rate(result) {
+    connection.query(
+        'SELECT fish_pack.fish_ref, ' +
+        'MIN(fish_pack.whole_fish_purchase_rate) AS smallest_rate, ' +
+        'MAX(fish_pack.whole_fish_purchase_rate) AS greatest_rate, ' +
+        'AVG(fish_pack.whole_fish_purchase_rate) AS average_rate ' +
+        'FROM fish_pack ' +
+        'JOIN fish ON fish_pack.fish_ref = fish.id ' +
+        'WHERE fish_pack.packing_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) ' +
+        'GROUP BY fish_pack.fish_ref',
+        (error, res) => {
+            if (error) {
+                console.error('Error retrieving fish packs:', error);
+                result(error, null);
+                return;
+            }
+            console.log('Retrieved fish packs:', res);
+            result(null, res);
+        }
+    );
+}
+
+
+
+
   
 }
 

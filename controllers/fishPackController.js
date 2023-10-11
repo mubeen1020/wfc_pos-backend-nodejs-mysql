@@ -32,6 +32,21 @@ exports.getAllFishPacks = (req, res) => {
   });
 };
 
+exports.getmin_max_rate = (req, res) => {
+  FishPack.getmin_max_rate((error, fishPacks) => {
+    if (error) {
+      return res.status(500).json({
+        message: 'An error occurred while retrieving fish packs.',
+        error,
+      });
+    }
+    res.json({
+      message: 'Retrieved fish packs successfully!',
+      fishPacks,
+    });
+  });
+};
+
 exports.getFishPackById = (req, res) => {
     const { id } = req.params;
   
