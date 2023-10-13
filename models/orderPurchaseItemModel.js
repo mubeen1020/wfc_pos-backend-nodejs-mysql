@@ -77,9 +77,9 @@ class OrderPurchaseItem {
  
   static getSameFishRefAndFishCut(result){
     const query = `
-    SELECT fish_ref, fish_cut, SUM(fish_weight) AS fish_weight, SUM(meat_weight) AS meat_weight
+    SELECT fish_ref, fish_cut,is_active , SUM(fish_weight) AS fish_weight, SUM(meat_weight) AS meat_weight
     FROM order_purchase_item
-    GROUP BY fish_ref, fish_cut;
+    GROUP BY fish_ref, fish_cut,is_active;
     `;
   
     connection.query(query, (error, res) => {
