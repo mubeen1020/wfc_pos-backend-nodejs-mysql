@@ -10,7 +10,6 @@ class OrderstockItem {
     this.fish_rate = orderItem.fish_rate;
     this.meat_rate = orderItem.meat_rate;
     this.skin = orderItem.skin || false; 
-    this.kante = orderItem.kante;
     this.pack_price = orderItem.pack_price;
     this.item_discount_absolute = orderItem.item_discount_absolute;
     this.item_discount_percent = orderItem.item_discount_percent;
