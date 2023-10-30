@@ -17,6 +17,20 @@ exports.createFish = (req, res) => {
   });
 };
 
+exports.searchFish = (req, res) => {
+  const query = req.query.query;
+  Fish.search(query, (error, fishes) => {
+    if (error) {
+      console.error('Error searching for fishes:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    if (fishes.length === 0) {
+      return res.json({ message: 'Fish not found.' }).status(404);
+    }
+    return res.status(200).json(fishes);
+  });
+};
+
 exports.getAllFish = (req, res) => {
   Fish.getAll((error, fishList) => {
     if (error) {
@@ -108,16 +122,4 @@ exports.deleteFish = (req, res) => {
   });
 };
 
-exports.searchFish = (req, res) => {
-    const query = req.query.query;
-    Fish.search(query, (error, fishes) => {
-      if (error) {
-        console.error('Error searching for fishes:', error);
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
-      if (fishes.length === 0) {
-        return res.json({ message: 'Fish not found.' }).status(404);
-      }
-      return res.status(200).json(fishes);
-    });
-  };
+

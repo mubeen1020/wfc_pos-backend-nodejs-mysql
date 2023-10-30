@@ -95,13 +95,13 @@ class FishPack {
     });
   }
 
-  static searchByPackingDateAndFishRef(packingDate, fishRef, result) {
+  static searchByPackingDateAndFishRef(fishRef, result) {
     const query = `
-    SELECT * FROM fish_pack 
-    WHERE packing_date = ? 
-    OR (fish_ref IN (SELECT id FROM fish WHERE local_name LIKE  ?))
-`;
-    connection.query(query, [packingDate, fishRef], (error, res) => {
+      SELECT * FROM fish_pack 
+      WHERE fish_ref IN (SELECT id FROM fish WHERE local_name LIKE ? OR local_name LIKE ?)
+    `;
+    const searchTerm = `${fishRef}%`; // Adding a '%' to the search term
+    connection.query(query, [searchTerm, fishRef], (error, res) => {
       if (error) {
         console.error('Error searching fish packs:', error);
         result(error, null);
@@ -111,6 +111,7 @@ class FishPack {
       result(null, res);
     });
   }
+  
 
   static getmin_max_rate(result) {
     connection.query(

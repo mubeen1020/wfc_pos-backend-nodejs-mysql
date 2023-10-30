@@ -12,6 +12,7 @@ class Fish {
         this.max_purchase_rate = fish.max_purchase_rate;
         this.average_purchase_rate = fish.average_purchase_rate;
         this.overall_purchase_quantity = fish.overall_purchase_quantity;
+        this.fish_no = autoincrement
     }
 
     static create(newFish, result) {
@@ -23,6 +24,24 @@ class Fish {
             }
             console.log('Created a new fish:', { id: res.insertId, ...newFish });
             result(null, { id: res.insertId, ...newFish });
+        });
+    }
+
+    static search(query, result) {
+        const searchTerm = `%${query}%`;
+        const sql = `
+    SELECT * FROM fish
+    WHERE local_name LIKE ? OR english_name LIKE ?
+  `;
+
+        connection.query(sql, [searchTerm, searchTerm], (error, res) => {
+            if (error) {
+                console.error('Error searching for fish:', error);
+                result(error, null);
+                return;
+            }
+            console.log('Searched fishes:', res);
+            result(null, res);
         });
     }
 
@@ -74,23 +93,7 @@ class Fish {
         });
     }
 
-    static search(query, result) {
-        const searchTerm = `%${query}%`;
-        const sql = `
-    SELECT * FROM fish
-    WHERE local_name LIKE ? OR english_name LIKE ?
-  `;
-
-        connection.query(sql, [searchTerm, searchTerm], (error, res) => {
-            if (error) {
-                console.error('Error searching for fish:', error);
-                result(error, null);
-                return;
-            }
-            console.log('Searched fishes:', res);
-            result(null, res);
-        });
-    }
+   
 
     static getFishWithSettings(result) {
         const sqlQuery = `
