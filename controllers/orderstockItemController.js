@@ -14,6 +14,7 @@ exports.createOrderItem = (req, res) => {
     pack_price,
     item_discount_absolute,
     item_discount_percent,
+    is_bone
   } = req.body;
 
 const newOrderItem = new OrderstockItem({
@@ -29,6 +30,7 @@ const newOrderItem = new OrderstockItem({
     pack_price,
     item_discount_absolute,
     item_discount_percent,
+    is_bone
 });
 
 OrderstockItem.create(newOrderItem, (error, orderItem) => {

@@ -13,6 +13,7 @@ class OrderstockItem {
     this.pack_price = orderItem.pack_price;
     this.item_discount_absolute = orderItem.item_discount_absolute;
     this.item_discount_percent = orderItem.item_discount_percent;
+    this.is_bone = orderItem.is_bone;
   }
 
   static create(newOrderItem, result) {
